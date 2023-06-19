@@ -1,0 +1,428 @@
+﻿@page
+@model Kuutioiden_varausnäkymä.Pages.MerkuriusModel
+@{
+    ViewData["Title"] = "Merkurius";
+}
+<body onload="tarkista()">
+<div class="text-center">
+        <div style="color:#8BE37A" class="display-4"><b>Merkurius</b></div>
+    <table style="float: left; border:0px" width="2%">
+        <tr style="border:0px">
+            <th style="border:0px"></th>
+        </tr>
+    </table>
+</div>
+<p>&nbsp;</p>
+<div class ="text-center" hidden>
+    <b style="font-size:200%">STATUS</b>
+</div>
+    <div class="text-center" style="display: none">
+    <table style="float: left; border:0px" width="30%">
+        <tr style="border:0px">
+            <th style="border:0px"></th>
+        </tr>
+    </table>
+    <table border:1px #fff; border-radius:10px" width="40%" bgcolor="#fff" height="60px">
+        <thead>
+            <tr align="center" bgcolor=red style="border-radius:10px; border:1px red">
+                    <th style="border-radius:10px; border:1px red">
+                    <b style="color:white; font-size:200%" font-size=>KÄYTÖSSÄ / IN USE</b>
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+    <div class="text-center" style="display: block">
+    <table style="float: left; border:0px" width="30%">
+        <tr style="border:0px">
+            <th style="border:0px"></th>
+        </tr>
+    </table>
+    <table border:1px #fff; border-radius:10px" width="40%" bgcolor="#fff" height="60px">
+        <thead>
+            <tr align="center" bgcolor=#3deb34 style="border-radius:10px; border:1px #3deb34">
+                <th style="border-radius:10px; border:1px #3deb34">
+                    <b style="color:white; font-size:200%" font-size=>VAPAA / FREE TO USE</b>
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<p>&nbsp;</p>
+
+
+<div>
+        <table bgcolor=#8BE37A width="100%" style="float: left; border:1px #8BE37A; border-radius:10px">
+
+            <tr style="border:1px #8BE37A; border-radius:10px">
+                <td style="border:1px #8BE37A; border-radius:10px">
+                <p></p>
+
+                <div class="text-center" id="Week" style="font-size: 30px; color: white">Viikko: @Model.Viikko()</div>
+
+                <table style="float: left; border:0px" width="2%">
+                    <tr style="border:0px">
+                        <th style="border:0px"></th>
+                    </tr>
+                    <t>&nbsp;</t>
+                </table>
+
+
+
+
+                <table style="float: left; border:1px lightgreen; border-radius:10px" width="17.6%" bgcolor=lightgreen>
+                    <thead>
+                            <tr id="ma" align="center" bgcolor=#7BCD6B>
+                            <th style="border-radius:10px; border:1px white">
+                                Ma
+                                @while (true)
+                                {
+                                    SetupModel vk = new SetupModel();
+                                    string ma = vk.Maanantai().Substring(0, 4);
+
+                                    if (ma.Substring(3, 1) == ".")
+                                    {
+                                        @vk.Maanantai().Substring(0,3);
+                                    }
+                                    else
+                                    {
+                                        @vk.Maanantai().Substring(0,4)
+                                        ;
+                                    }
+                                    break;
+                                }
+
+                            </th>
+
+
+                        </>
+                            <tr style="border:#8BE37A" bgcolor=#8BE37A>
+                                <td bgcolor=#8BE37A style="border:1px #8BE37A">&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        {
+                            JupiterModel kalenteri = new JupiterModel();
+                            string ma = kalenteri.Maanantai().Substring(0, 2);
+
+
+                            {
+
+                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
+                                    <td style="font-size:18px; border-radius:10px; border:1px white">
+                                        item.otsikko
+                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
+                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
+                                        <p style="font-size:14px">Varannut: item.nimi</p>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                </tr>
+                            }
+                        }
+                        -->
+                    </tbody>
+                </table>
+
+                <table style="float: left; border:0px" width="2%">
+                    <tr style="border:0px">
+                        <th style="border:0px"></th>
+                    </tr>
+                </table>
+
+                    <table style="float: left; border:1px #8BE37A; border-radius:10px" width="17.6%" bgcolor=#8BE37A>
+                    <thead>
+                            <tr id="ti" align="center" bgcolor=#7BCD6B>
+                            <th style="border-radius:10px; border:1px white">
+                                Ti
+                                @while (true)
+                                {
+                                    SetupModel vk = new SetupModel();
+                                    string ti = vk.Tiistai().Substring(0, 4);
+
+                                    if (ti.Substring(3, 1) == ".")
+                                    {
+                                        @vk.Tiistai().Substring(0,3);
+                                    }
+                                    else
+                                    {
+                                        @vk.Tiistai().Substring(0,4);
+                                    }
+                                    break;
+                                }
+                            </th>
+                        </tr>
+                            <tr style="border:1px #8BE37A" bgcolor=#8BE37A>
+                                <td bgcolor=#8BE37A style ="border:1px #8BE37A">&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        {
+                            JupiterModel kalenteri = new JupiterModel();
+                            string ti = kalenteri.Tiistai().Substring(0, 2);
+
+
+                            {
+
+                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
+                                    <td style="font-size:18px; border-radius:10px; border:1px white">
+                                        item.otsikko
+                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
+                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
+                                        <p style="font-size:14px">Varannut: item.nimi</p>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                </tr>
+                            }
+                        }
+                        -->
+                    </tbody>
+                </table>
+
+                <table style="float: left; border:0px" width="2%">
+                    <tr style="border:0px">
+                        <th style="border:0px"></th>
+                    </tr>
+                </table>
+
+                    <table style="float: left; border:1px #8BE37A; border-radius:10px" width="17.6%" bgcolor=#8BE37A>
+                    <thead>
+                            <tr id="ke" align="center" bgcolor=#7BCD6B>
+                            <th style="border-radius:10px; border:1px white">
+                                Ke
+
+                                @while (true)
+                                {
+                                    SetupModel vk = new SetupModel();
+                                    string ke = vk.Keskiviikko().Substring(0, 4);
+
+                                    if (ke.Substring(3, 1) == ".")
+                                    {
+                                        @vk.Keskiviikko().Substring(0,3);
+                                    }
+                                    else
+                                    {
+                                        @vk.Keskiviikko().Substring(0,4);
+                                    }
+                                    break;
+                                }
+                            </th>
+
+                        </tr>
+                            <tr style="border:1px #8BE37A" bgcolor=#8BE37A>
+                                <td bgcolor=#8BE37A style="border:1px #8BE37A">&nbsp;</td>
+                        </>
+                    </thead>
+                    <tbody>
+                        <!--
+                        {
+                            JupiterModel kalenteri = new JupiterModel();
+                            string pv = kalenteri.Keskiviikko().Substring(0, 2);
+
+
+                            {
+
+                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
+                                    <td style="font-size:18px; border-radius:10px; border:1px white">
+                                        item.otsikko
+                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
+                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
+                                        <p style="font-size:14px">Varannut: item.nimi</p>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                </tr>
+                            }
+                        }
+                        -->
+                    </tbody>
+                </table>
+
+                <table style="float: left; border:0px" width="2%">
+                    <tr style="border:0px">
+                        <th style="border:0px"></th>
+                    </tr>
+                </table>
+
+                    <table style="float: left; border:1px #8BE37A; border-radius:10px" width="17.6%" bgcolor=#8BE37A>
+                    <thead>
+                            <tr id="to" align="center" bgcolor=#7BCD6B>
+                            <th style="border-radius:10px; border:1px white">
+                                To
+
+                                @while (true)
+                                {
+                                    SetupModel vk = new SetupModel();
+                                    string to = vk.Torstai().Substring(0, 4);
+
+                                    if (to.Substring(3, 1) == ".")
+                                    {
+                                        @vk.Torstai().Substring(0,3);
+                                    }
+                                    else
+                                    {
+                                        @vk.Torstai().Substring(0,4);
+                                    }
+                                    break;
+                                }
+                            </th>
+                        </tr>
+                            <tr style="border:1px #8BE37A" bgcolor=#8BE37A>
+                                <td bgcolor=#8BE37A style="border:1px #8BE37A">&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        {
+                            JupiterModel kalenteri = new JupiterModel();
+                            string pv = kalenteri.Torstai().Substring(0, 2);
+
+
+                            {
+
+                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
+                                    <td style="font-size:18px; border-radius:10px; border:1px white">
+                                        item.otsikko
+                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
+                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
+                                        <p style="font-size:14px">Varannut: item.nimi</p>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                </tr>
+                            }
+                        }
+                        -->
+                    </tbody>
+                </table>
+
+                <table style="float: left; border:0px" width="2%">
+                    <tr style="border:0px">
+                        <th style="border:0px"></th>
+                    </tr>
+                </table>
+
+                    <table style="float: left; border:1px #8BE37A; border-radius:10px" width="17.6%" bgcolor=#8BE37A>
+                    <thead>
+                            <tr id="pe" align="center" bgcolor=#7BCD6B>
+                            <th style="border-radius:10px; border:1px white">
+                                Pe
+
+                                @while (true)
+                                {
+                                    SetupModel vk = new SetupModel();
+                                    string pe = vk.Perjantai().Substring(0, 4);
+
+                                    if (pe.Substring(3, 1) == ".")
+                                    {
+                                        @vk.Perjantai().Substring(0,3);
+                                    }
+                                    else
+                                    {
+                                        @vk.Perjantai().Substring(0,4);
+                                    }
+
+                                    break;
+                                }
+                            </th>
+                        </tr>
+                            <tr style="border:1px #8BE37A" bgcolor=#8BE37A>
+                                <td bgcolor=#8BE37A style="border:1px #8BE37A">&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        {
+                            JupiterModel kalenteri = new JupiterModel();
+                            string pv = kalenteri.Perjantai().Substring(0, 2);
+
+
+                            {
+
+                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
+                                    <td style="font-size:18px; border-radius:10px; border:1px white">
+                                        item.otsikko
+                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
+                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
+                                        <p style="font-size:14px">Varannut: item.nimi</p>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                </tr>
+                            }
+                        }
+                        -->
+                    </tbody>
+                </table>
+
+                <table style="float: left; border:0px" width="2%">
+                    <tr style="border:0px">
+                        <th style="border:0px"></th>
+                    </tr>
+                </table>
+
+
+
+            </td>
+            </>
+
+    </table>
+</div>
+<script>
+    function tarkista() {
+        var tanaan = Date();
+        var nyt = new Date();
+
+        var ma = new Date(nyt.getFullYear(), nyt.getMonth(), nyt.getDay() - nyt.getDay() - 2);
+        var matext = ma.toString().substring(0, 3);
+
+        var ti = new Date(nyt.getFullYear(), nyt.getMonth(), nyt.getDay() - nyt.getDay() - 1);
+        var titext = ma.toString().substring(0, 3);
+
+        var ke = new Date(nyt.getFullYear(), nyt.getMonth(), nyt.getDay() - nyt.getDay() - 0);
+        var ketext = ma.toString().substring(0, 3);
+
+        var to = new Date(nyt.getFullYear(), nyt.getMonth(), nyt.getDay() - nyt.getDay() + 1);
+        var totext = ma.toString().substring(0, 3);
+
+        var pe = new Date(nyt.getFullYear(), nyt.getMonth(), nyt.getDay() - nyt.getDay() + 2);
+        var petext = ma.toString().substring(0, 3);
+        var tamapv = tanaan.substring(0, 3);
+
+        const maanantai = document.getElementById("ma");
+        const tiistai = document.getElementById("ti");
+        const keskiviikko = document.getElementById("ke");
+        const torstai = document.getElementById("to");
+        const perjantai = document.getElementById("pe");
+
+        if (tamapv == matext) {
+            maanantai.style.backgroundColor = "#fff";
+        }
+        else if (tamapv == titext) {
+            tiistai.style.backgroundColor = "#fff";
+        }
+        else if (tamapv == ketext) {
+            keskiviikko.style.backgroundColor = "#fff";
+        }
+        else if (tamapv == totext) {
+            torstai.style.backgroundColor = "#fff";
+        }
+        else if (tamapv == petext) {
+            perjantai.style.backgroundColor = "#fff";
+        }
+            //var Ikkuna1 = document.getElementById("id1");
+            //var Ikkuna2 = document.getElementById("id2");
+            //Ikkuna1.style.display = "none";
+            //Ikkuna2.style.display = "block";
+
+    }
+</script>
+</body>
