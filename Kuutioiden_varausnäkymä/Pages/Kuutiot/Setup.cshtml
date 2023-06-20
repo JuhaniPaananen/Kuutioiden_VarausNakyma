@@ -4,6 +4,10 @@
     ViewData["Title"] = "Setup";
 }
 <h1>Setup</h1>
-<p>
+<table>
     @SetupModel.CallGet()
-</p>
+    @foreach (string varaus in SetupModel.Neptunus)
+    {
+        <tr><th>@varaus</th></tr>
+    }
+</table>

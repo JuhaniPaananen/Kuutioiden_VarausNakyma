@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
@@ -44,35 +45,63 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         public static string CallGet()
         {
             API();
-            return locations;
+            return "";
         }
+
+        public static List<string> Neptunus = new List<string>();
 
         public static void API()
         {
             using (var client = new HttpClient())
             {
-                var url = new Uri("https://lukkarit.centria.fi/rest/basket/0/events/posts");
+                int idnro = 127575;
+                string id = idnro.ToString();
+                //var url = new Uri("lukkarit.centria.fi/rest/basket/0/events/");
+                var url = new Uri("https://lukkarit.centria.fi/rest/event/" + id);
                 var tulos = client.GetAsync(url).Result;
                 var json = tulos.Content.ReadAsStringAsync().Result;
                 string vs = json.ToString();
-                locations += "VASTAUS 1: " + vs + "\n";
+                //locations += "VASTAUS 1: " + vs + "\n";
+                
+                //Tyhjä id on "", eikä NULL! (vs)
 
-                var url1 = new Uri("https://lukkarit.centria.fi/rest/locations");
-                using StringContent jsonContent = new(JsonSerializer.Serialize(new { target = "locations", type = "name", text = "Neptunus", dateFrom = "", dateTo = "", filters = "", show = true }), 
-                Encoding.UTF8, "application/json");
-                var tulos1 = client.PostAsync(url1, jsonContent).Result;
-                var json1 = tulos1.Content.ReadAsStringAsync().Result;
-                string vs1 = json1.ToString();
-                locations += "VASTAUS 2: " + vs1 + "\n";
-
-                using StringContent jsonContent1 = new(JsonSerializer.Serialize(new { dateFrom = "2023-05-01", dateTo = "2023-05-08", eventType = "visible"}),
-                 Encoding.UTF8, "application/json");
-                var tulos2 = client.PostAsync(url, jsonContent1).Result;
-                var json2 = tulos2.Content.ReadAsStringAsync().Result;
-                string vs2 = json2.ToString();
-                locations += "VASTAUS 3: " + vs2 + "\n";
+                for(int i = 127500; i < 127600; i++)
+                {
+                    id = i.ToString();
+                    url = new Uri("https://lukkarit.centria.fi/rest/event/" + id);
+                    tulos = client.GetAsync(url).Result;
+                    json = tulos.Content.ReadAsStringAsync().Result;
+                    vs = json.ToString();
+                    if (vs != "")
+                    {
+                        //if(vs.Contains("Neptunus") || vs.Contains("Jupiter"))
+                        if (vs.Contains("Neptunus"))
+                        {
+                            //char[] merkit = { '{', '}', '[', ']' };
+                            //string varaus = vs.TrimEnd(merkit);
+                            //locations += "VASTAUS: " + vs + "\n";
+                            Neptunus.Add(TRIMMERI(vs));
+                        }
+                    }
+                }
 
             }
+
+        }
+        public static string TRIMMERI(string varaus)
+        {
+            string vs = varaus.Replace("{", string.Empty);
+            vs = vs.Replace("}", string.Empty);
+            vs = vs.Replace("[", string.Empty);
+            vs = vs.Replace("]", string.Empty);
+            string[] varaustiedot = vs.Split(',');
+            //return vs;
+            //0 event_Id
+            //1 Start_time
+            //2 End_time
+            //3 Subject
+            //return varaustiedot[0];
+            return vs;
         }
     }
 }
