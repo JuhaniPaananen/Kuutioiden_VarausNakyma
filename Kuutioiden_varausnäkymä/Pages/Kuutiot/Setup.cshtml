@@ -6,7 +6,28 @@
 <h1>Setup</h1>
 <table>
     @SetupModel.CallGet()
+    <tr><th><b>Jupiter</b></th></tr>
+    @foreach (string varaus in SetupModel.Jupiter)
+    {
+        <tr><th>@varaus</th></tr>
+    }
+    <tr><th><b>Merkurius</b></th></tr>
+    @foreach (string varaus in SetupModel.Merkurius)
+    {
+        <tr><th>@varaus</th></tr>
+    }
+    <tr><th><b>Neptunus</b></th></tr>
     @foreach (string varaus in SetupModel.Neptunus)
+    {
+        <tr><th>@varaus</th></tr>
+    }
+    <tr><th><b>Saturnus</b></th></tr>
+    @foreach (string varaus in SetupModel.Saturnus)
+    {
+        <tr><th>@varaus</th></tr>
+    }
+    <tr><th><b>Quu</b></th></tr>
+    @foreach (string varaus in SetupModel.Quu)
     {
         <tr><th>@varaus</th></tr>
     }

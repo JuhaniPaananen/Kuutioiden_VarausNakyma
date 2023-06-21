@@ -15,11 +15,6 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         {
 
         }
-        public string Varaukset()
-        {
-            SetupModel setupModel = new SetupModel();
-            return setupModel.Varaukset();
-        }
         public int Viikko()
         {
             DateTime aika = DateTime.Now;

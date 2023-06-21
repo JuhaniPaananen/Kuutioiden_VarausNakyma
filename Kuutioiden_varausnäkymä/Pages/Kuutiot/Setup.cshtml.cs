@@ -14,12 +14,6 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         public void OnGet()
         {
         }
-        public string Varaukset()
-        {
-            VarausController controller = new VarausController();
-            string sana = controller.GetVaraus();
-            return sana;
-        }
         public int Viikko()
         {
             DateTime aika = DateTime.Now;
@@ -44,11 +38,20 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
 
         public static string CallGet()
         {
+            Jupiter.Clear();
+            Merkurius.Clear();
+            Neptunus.Clear();
+            Saturnus.Clear();
+            Quu.Clear();
             API();
             return "";
         }
 
+        public static List<string> Jupiter = new List<string>();
+        public static List<string> Merkurius = new List<string>();
         public static List<string> Neptunus = new List<string>();
+        public static List<string> Saturnus = new List<string>();
+        public static List<string> Quu = new List<string>();
 
         public static void API()
         {
@@ -62,10 +65,13 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
                 var json = tulos.Content.ReadAsStringAsync().Result;
                 string vs = json.ToString();
                 //locations += "VASTAUS 1: " + vs + "\n";
-                
-                //Tyhjä id on "", eikä NULL! (vs)
 
-                for(int i = 127500; i < 127600; i++)
+                //Tyhjä id on "".
+
+                int id_alku = 132000;
+                int id_loppu = 132100;
+
+                for (int i = id_alku; i < id_loppu; i++)
                 {
                     id = i.ToString();
                     url = new Uri("https://lukkarit.centria.fi/rest/event/" + id);
@@ -74,13 +80,25 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
                     vs = json.ToString();
                     if (vs != "")
                     {
-                        //if(vs.Contains("Neptunus") || vs.Contains("Jupiter"))
-                        if (vs.Contains("Neptunus"))
+                        if (vs.Contains("Jupiter")) 
                         {
-                            //char[] merkit = { '{', '}', '[', ']' };
-                            //string varaus = vs.TrimEnd(merkit);
-                            //locations += "VASTAUS: " + vs + "\n";
+                            Jupiter.Add(TRIMMERI(vs));
+                        }
+                        else if (vs.Contains("Merkurius"))
+                        {
+                            Merkurius.Add(TRIMMERI(vs));
+                        }
+                        else if (vs.Contains("Neptunus"))
+                        {
                             Neptunus.Add(TRIMMERI(vs));
+                        }
+                        else if (vs.Contains("Saturnus"))
+                        {
+                            Saturnus.Add(TRIMMERI(vs));
+                        }
+                        else if (vs.Contains("Quu"))
+                        {
+                            Quu.Add(TRIMMERI(vs));
                         }
                     }
                 }
@@ -97,11 +115,90 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
             string[] varaustiedot = vs.Split(',');
             //return vs;
             //0 event_Id
-            //1 Start_time
-            //2 End_time
-            //3 Subject
-            //return varaustiedot[0];
-            return vs;
+            //1 start_date
+            //2 end_date
+            //3 subject
+
+            //Norm:
+            //4 location
+            //5 name (Kuutio)
+            //6 parent (Kokkola)
+
+            //Desc Versio:
+            //4 description
+            //5 location
+            //6 name (Kuutio)
+            //7 parent (Kokkola)
+            string palautus = "";
+            for (int i = 0; i < 7; i++) 
+            {
+                if (i != 9)
+                {
+                    if (varaustiedot[i].Contains("\"start_date\""))
+                    {
+                        varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                        string[] tieto = varaustiedot[i].Split(':');
+                        palautus += tieto[1] + ":" + tieto[2];
+                    }
+                    else if (varaustiedot[i].Contains("\"end_date\""))
+                    {
+                        varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                        string[] tieto = varaustiedot[i].Split(':');
+                        palautus += ";" + tieto[1] + ":" + tieto[2];
+                    }
+                    else if (varaustiedot[i].Contains("\"subject\""))
+                    {
+                        varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                        string[] tieto = varaustiedot[i].Split(':');
+                        palautus += ";" + tieto[1];
+                    }
+                    else if (varaustiedot[i].Contains("\"name\""))
+                    {
+                        varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                        string[] tieto = varaustiedot[i].Split(':');
+                        palautus += ";" + tieto[1];
+                    }
+                    else if (varaustiedot[i].Contains("\"description\""))
+                    {
+                        varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                        string[] tieto = varaustiedot[i].Split(':');
+                        palautus += ";" + tieto[1];
+                    }
+                    else if (i == 4 && !vs.Contains("\"description\""))
+                    {
+                        palautus += ";Ei tietoja";
+                    }
+                    else if (!varaustiedot[i].Contains("\"event_id\"") && !varaustiedot[i].Contains("\"location\"") && !varaustiedot[i].Contains("\"parent\""))
+                    {
+                        palautus += "," + varaustiedot[i];
+                    }
+                }
+                else
+                {
+                    if (i == 9999)
+                    {
+                        if (varaustiedot[i].Contains("\"description\""))
+                        {
+                            varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                            string[] tieto = varaustiedot[i].Split(':');
+                            int a = i + 1;
+                            if (!varaustiedot[a].Contains("\"name\"") && !varaustiedot[a].Contains("\"event_id\"") && !varaustiedot[a].Contains("\"location\"") && !varaustiedot[a].Contains("\"parent\""))
+                            {
+                                palautus += "," + varaustiedot[a];
+                            }
+                            a = 0;
+                        }
+                    }
+                }
+            }
+            //MUOTO:
+            //0 start_date
+            //1 end_date
+            //2 subject
+            //4 description
+            //5 
+            //return palautus;
+            return palautus;
         }
     }
 }
