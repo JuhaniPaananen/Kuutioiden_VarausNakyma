@@ -4,8 +4,10 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+//using System.Text.Json;
+//using System.Text.Json.Nodes;
+using Newtonsoft.Json;
+using System.Runtime.Intrinsics.X86;
 
 namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
 {
@@ -14,6 +16,56 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         public void OnGet()
         {
         }
+        public static string AikaGet = "";
+        public static string OnOff()
+        {
+            Onko();
+            return "";
+        }
+        public static void Onko()
+        {
+            DateTime currentDateTime = DateTime.Now;
+            int nytTun = Convert.ToInt32(currentDateTime.ToString("HH"));
+            int nytMin = Convert.ToInt32(currentDateTime.ToString("mm"));
+            int nyt = (nytTun * 100) + nytMin;
+            AikaGet = nyt.ToString();
+            //formattedDateTime = currentDateTime.ToString("dd");
+            int pvnyt = Convert.ToInt32(currentDateTime.ToString("dd"));
+
+        foreach (string varaus in Neptunus)
+        {
+                string word = varaus;
+                string[] tieto = word.Split(';');
+                string[] aikaAlku = tieto[0].Substring(10, 6).Split(':');
+                int varaustunAlk = Convert.ToInt32(aikaAlku[0]);
+                int varausminAlk = Convert.ToInt32(aikaAlku[1]);
+                int varausAlku = (varaustunAlk * 100) + varausminAlk;
+
+                string[] aikaLoppu = tieto[1].Substring(10, 6).Split(':');
+                int varaustunLop = Convert.ToInt32(aikaLoppu[0]);
+                int varausminLop = Convert.ToInt32(aikaLoppu[1]);
+                int varausLoppu = (varaustunLop * 100) + varausminLop;
+
+                int varauspv = Convert.ToInt32(tieto[2].Substring(0, 2));
+
+                if (varauspv == pvnyt)
+                {
+
+                if (nyt <= varausLoppu)
+                    {
+                    if ((varausAlku - nyt) + varausLoppu <= varausLoppu)
+                        {
+                        Oikein = 1;
+                    }
+                }
+                else
+                {
+                    Oikein = 0;
+                }
+            }
+        }
+        }
+        public static int Oikein = 0;
         public int Viikko()
         {
             DateTime aika = DateTime.Now;
@@ -46,7 +98,7 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
             API();
             return "";
         }
-
+      
         public static List<string> Jupiter = new List<string>();
         public static List<string> Merkurius = new List<string>();
         public static List<string> Neptunus = new List<string>();
@@ -57,8 +109,8 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         {
             using (var client = new HttpClient())
             {
-                int idnro = 127575;
-                string id = idnro.ToString();
+                //int idnro = 127575;
+                string id = "";
                 //var url = new Uri("lukkarit.centria.fi/rest/basket/0/events/");
                 var url = new Uri("https://lukkarit.centria.fi/rest/event/" + id);
                 var tulos = client.GetAsync(url).Result;
@@ -68,8 +120,8 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
 
                 //Tyhjä id on "".
 
-                int id_alku = 132000;
-                int id_loppu = 132100;
+                int id_alku = 127475;
+                int id_loppu = 127575;
 
                 for (int i = id_alku; i < id_loppu; i++)
                 {
@@ -134,7 +186,12 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
             {
                 if (i != 9)
                 {
-                    if (varaustiedot[i].Contains("\"start_date\""))
+                    if (!varaustiedot[i].Contains("\"name\"") && !varaustiedot[i].Contains("\"start_date\"") && !varaustiedot[i].Contains("\"end_date\"") && !varaustiedot[i].Contains("\"subject\"") && !varaustiedot[i].Contains("\"description\"") && !varaustiedot[i].Contains("\"event_id\"") && !varaustiedot[i].Contains("\"location\"") && !varaustiedot[i].Contains("\"parent\""))
+                    {
+                        varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
+                        palautus += "," + varaustiedot[i];
+                    }
+                    else if (varaustiedot[i].Contains("\"start_date\""))
                     {
                         varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
                         string[] tieto = varaustiedot[i].Split(':');
@@ -154,6 +211,7 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
                     }
                     else if (varaustiedot[i].Contains("\"name\""))
                     {
+                        //Tätä kohtaa ei tarvisi enää, koska tämä olivan testi vaiheessa mukana.
                         varaustiedot[i] = varaustiedot[i].Replace("\"", string.Empty);
                         string[] tieto = varaustiedot[i].Split(':');
                         palautus += ";" + tieto[1];
@@ -166,11 +224,11 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
                     }
                     else if (i == 4 && !vs.Contains("\"description\""))
                     {
-                        palautus += ";Ei tietoja";
+                        palautus += ";Ei lisätietoa";
                     }
-                    else if (!varaustiedot[i].Contains("\"event_id\"") && !varaustiedot[i].Contains("\"location\"") && !varaustiedot[i].Contains("\"parent\""))
+                    else if (i == 5 && !vs.Contains("\"description\""))
                     {
-                        palautus += "," + varaustiedot[i];
+                        palautus += ";Ei lisätietoa";
                     }
                 }
                 else

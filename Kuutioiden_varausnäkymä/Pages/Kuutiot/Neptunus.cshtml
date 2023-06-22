@@ -5,6 +5,7 @@
 }
 <head>
     @SetupModel.CallGet()
+    @SetupModel.OnOff()
 </head>
 <body onload="tarkista()">
 <div class="text-center">
@@ -19,7 +20,7 @@
 <div class="text-center" hidden>
     <b style="font-size:200%">STATUS</b>
 </div>
-    <div class="text-center" style="display: none">
+ <div id="On" class="text-center" style="display: none">
     <table style="float: left; border:0px" width="30%">
         <tr style="border:0px">
             <th style="border:0px"></th>
@@ -35,7 +36,7 @@
         </thead>
     </table>
 </div>
-    <div class="text-center" style="display: block">
+<div id="Off" class="text-center" style="display: block">
     <table style="float: left; border:0px" width="30%">
         <tr style="border:0px">
             <th style="border:0px"></th>
@@ -383,6 +384,8 @@
 
     </table>
 </div>
+<p id="demo"></p>
+<p id="demo1"></p>
 <script>
     function tarkista() {
         var tanaan = Date();
@@ -409,6 +412,26 @@
         const keskiviikko = document.getElementById("ke");
         const torstai = document.getElementById("to");
         const perjantai = document.getElementById("pe");
+
+        const varattu = document.getElementById("On");
+        const vapaa = document.getElementById("Off");
+
+            var vastaus = "@SetupModel.Oikein";
+            var vastaus1 = "@SetupModel.AikaGet";
+     
+            document.getElementById("demo1").innerHTML = vastaus1;
+            document.getElementById("demo").innerHTML = vastaus;
+            if(vastaus == 1)
+            {
+                varattu.style.display = "block";
+                vapaa.style.display = "none";
+            }
+            
+            if (vastaus == 0) 
+            {
+                varattu.style.display = "none";
+                vapaa.style.display = "block";
+            }
 
         if (tamapv == matext) {
             maanantai.style.backgroundColor = "#fff";

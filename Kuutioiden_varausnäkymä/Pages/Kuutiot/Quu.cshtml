@@ -5,6 +5,7 @@
 }
 <head>
     @SetupModel.CallGet()
+    @SetupModel.OnOff()
 </head>
 <body onload="tarkista()">
 <div class="text-center">
@@ -412,7 +413,6 @@
 
         if (tamapv == matext) {
             maanantai.style.backgroundColor = "#fff";
-            //[muut päivät].style.color = "#fff"; Ehkä?
         }
         else if (tamapv == titext) {
             tiistai.style.backgroundColor = "#fff";

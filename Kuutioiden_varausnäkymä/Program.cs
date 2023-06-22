@@ -27,22 +27,3 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
-
-var client = new HttpClient();
-using StringContent jsonContent = new(JsonSerializer.Serialize(new { target = "locations", type = "name", text = "Neptunus", dateFrom = "", dateTo = "", filters = "", show = true }), Encoding.UTF8, "application/json");
-using HttpResponseMessage response = await client.PostAsync("https://lukkarit.centria.fi/rest/locations", jsonContent);
-response.EnsureSuccessStatusCode();
-var jsonResponse = await response.Content.ReadAsStringAsync();
-//Console.WriteLine($"{jsonResponse}\n");
-
-namespace ConsoleC
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var url = "";
-        }
-
-    }
-}

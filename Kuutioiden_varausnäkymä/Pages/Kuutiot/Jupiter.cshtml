@@ -5,6 +5,7 @@
 }
 <head>
     @SetupModel.CallGet()
+    @SetupModel.OnOff()
 </head>
 <body onload="tarkista()">
 <div class="text-center">
@@ -149,28 +150,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--
-                        {
-                            JupiterModel kalenteri = new JupiterModel();
-                            string ti = kalenteri.Tiistai().Substring(0, 2);
-
-                            
+                            @foreach (string varaus in SetupModel.Jupiter)
                             {
-
-                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
-                                    <td style="font-size:18px; border-radius:10px; border:1px white">
-                                        item.otsikko
-                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
-                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
-                                        <p style="font-size:14px">Varannut: item.nimi</p>
-                                    </td>
-                                </tr>
-                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
-                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
-                                </tr>
+                                SetupModel setup = new SetupModel();
+                                string[] pv = setup.Tiistai().Split('.');
+                                string[] tieto = varaus.Split(';');
+                                string[] pvt = tieto[1].Split('-');
+                                //pvt:
+                                //0 = Vuosi
+                                //1 = Kuukausi
+                                //2 = Päivä
+                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                {
+                                    <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
+                                        <td style="font-size:18px; border-radius:10px; border:1px white">
+                                            <b>@tieto[2]</b>
+                                            <p style="font-size:14px">@tieto[0].Substring(10,6) -  @tieto[1].Substring(10,6)</p>
+                                            <p style="font-size:14px">@pvt[0] - @pvt[1] - @pvt[2].Substring(0,2)</p>
+                                            <p style="font-size:14px">@tieto[3]</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                        <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                    </tr>
+                                }
                             }
-                        }
-                        -->
                     </tbody>
                 </table>
 
@@ -203,28 +207,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--
-                        {
-                            JupiterModel kalenteri = new JupiterModel();
-                            string pv = kalenteri.Keskiviikko().Substring(0, 2);
-
-
+                            @foreach (string varaus in SetupModel.Jupiter)
                             {
-
-                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
-                                    <td style="font-size:18px; border-radius:10px; border:1px white">
-                                        item.otsikko
-                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
-                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
-                                        <p style="font-size:14px">Varannut: item.nimi</p>
-                                    </td>
-                                </tr>
-                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
-                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
-                                </tr>
+                                SetupModel setup = new SetupModel();
+                                string[] pv = setup.Keskiviikko().Split('.');
+                                string[] tieto = varaus.Split(';');
+                                string[] pvt = tieto[1].Split('-');
+                                //pvt:
+                                //0 = Vuosi
+                                //1 = Kuukausi
+                                //2 = Päivä
+                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                {
+                                    <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
+                                        <td style="font-size:18px; border-radius:10px; border:1px white">
+                                            <b>@tieto[2]</b>
+                                            <p style="font-size:14px">@tieto[0].Substring(10,6) -  @tieto[1].Substring(10,6)</p>
+                                            <p style="font-size:14px">@pvt[0] - @pvt[1] - @pvt[2].Substring(0,2)</p>
+                                            <p style="font-size:14px">@tieto[3]</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                        <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                    </tr>
+                                }
                             }
-                        }
-                        -->
                     </tbody>
                 </table>
 
@@ -256,28 +263,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--
-                        {
-                            JupiterModel kalenteri = new JupiterModel();
-                            string pv = kalenteri.Torstai().Substring(0, 2);
-
-
+                            @foreach (string varaus in SetupModel.Jupiter)
                             {
-
-                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
-                                    <td style="font-size:18px; border-radius:10px; border:1px white">
-                                        item.otsikko
-                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
-                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
-                                        <p style="font-size:14px">Varannut: item.nimi</p>
-                                    </td>
-                                </tr>
-                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
-                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
-                                </tr>
+                                SetupModel setup = new SetupModel();
+                                string[] pv = setup.Torstai().Split('.');
+                                string[] tieto = varaus.Split(';');
+                                string[] pvt = tieto[1].Split('-');
+                                //pvt:
+                                //0 = Vuosi
+                                //1 = Kuukausi
+                                //2 = Päivä
+                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                {
+                                    <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
+                                        <td style="font-size:18px; border-radius:10px; border:1px white">
+                                            <b>@tieto[2]</b>
+                                            <p style="font-size:14px">@tieto[0].Substring(10,6) -  @tieto[1].Substring(10,6)</p>
+                                            <p style="font-size:14px">@pvt[0] - @pvt[1] - @pvt[2].Substring(0,2)</p>
+                                            <p style="font-size:14px">@tieto[3]</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                        <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                    </tr>
+                                }
                             }
-                        }
-                        -->
                     </tbody>
                 </table>
 
@@ -308,28 +318,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--
-                        {
-                            JupiterModel kalenteri = new JupiterModel();
-                            string pv = kalenteri.Perjantai().Substring(0, 2);
-
-
+                            @foreach (string varaus in SetupModel.Jupiter)
                             {
-
-                                <tr bgcolor=#fff style="border-radius:10px; border:1px white">
-                                    <td style="font-size:18px; border-radius:10px; border:1px white">
-                                        item.otsikko
-                                        <p style="font-size:14px">item.aloitus -  item.lopetus</p>
-                                        <p style="font-size:14px">item.paivays.Substring(8,2)</p>
-                                        <p style="font-size:14px">Varannut: item.nimi</p>
-                                    </td>
-                                </tr>
-                                <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
-                                    <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
-                                </tr>
+                                SetupModel setup = new SetupModel();
+                                string[] pv = setup.Perjantai().Split('.');
+                                string[] tieto = varaus.Split(';');
+                                string[] pvt = tieto[1].Split('-');
+                                //pvt:
+                                //0 = Vuosi
+                                //1 = Kuukausi
+                                //2 = Päivä
+                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                {
+                                    <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
+                                        <td style="font-size:18px; border-radius:10px; border:1px white">
+                                            <b>@tieto[2]</b>
+                                            <p style="font-size:14px">@tieto[0].Substring(10,6) -  @tieto[1].Substring(10,6)</p>
+                                            <p style="font-size:14px">@pvt[0] - @pvt[1] - @pvt[2].Substring(0,2)</p>
+                                            <p style="font-size:14px">@tieto[3]</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px #f8c4c4" bgcolor=#f8c4c4>
+                                        <td bgcolor=#f8c4c4 style="border:1px #f8c4c4">&nbsp;</td>
+                                    </tr>
+                                }
                             }
-                        }
-                        -->
                     </tbody>
                 </table>
 

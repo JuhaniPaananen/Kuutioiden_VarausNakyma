@@ -5,6 +5,7 @@
 }
 <head>
     @SetupModel.CallGet()
+    @SetupModel.OnOff()
 </head>
 <body onload="tarkista()">
 <div class="text-center">
@@ -292,7 +293,7 @@
                                 //0 = Vuosi
                                 //1 = Kuukausi
                                 //2 = Päivä
-                                //if (@pvt[2].Substring(0, 2) == pv[0] )//&& @pvt[1] == pv[1])
+                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
                                 {
                                     <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
                                         <td style="font-size:18px; border-radius:10px; border:1px white">
