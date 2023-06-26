@@ -5,7 +5,7 @@
 }
 <head>
     @SetupModel.CallGet()
-    @SetupModel.OnOff()
+    @SetupModel.OnOff("Saturnus")
 </head>
 <body onload="tarkista()">
 <div class="text-center">
@@ -20,38 +20,38 @@
     <div class="text-center" hidden>
     <b style="font-size:200%">STATUS</b>
 </div>
-    <div class="text-center" style="display: none">
-    <table style="float: left; border:0px" width="30%">
-        <tr style="border:0px">
-            <th style="border:0px"></th>
-        </tr>
-    </table>
-    <table border:1px #fff; border-radius:10px" width="40%" bgcolor="#fff" height="60px">
-        <thead>
-            <tr align="center" bgcolor=red style="border-radius:10px; border:1px red">
-                <th style="border-radius:10px; border:1px red">
-                    <b style="color:white; font-size:200%" font-size=>KÄYTÖSSÄ / IN USE</b>
-                </th>
+    <div id="On" class="text-center" style="display: none">
+        <table style="float: left; border:0px" width="30%">
+            <tr style="border:0px">
+                <th style="border:0px"></th>
             </tr>
-        </thead>
-    </table>
-</div>
-    <div class="text-center" style="display: block">
-    <table style="float: left; border:0px" width="30%">
-        <tr style="border:0px">
-            <th style="border:0px"></th>
-        </tr>
-    </table>
-    <table border:1px #fff; border-radius:10px" width="40%" bgcolor="#fff" height="60px">
-        <thead>
-            <tr align="center" bgcolor=#3deb34 style="border-radius:10px; border:1px #3deb34">
-                <th style="border-radius:10px; border:1px #3deb34">
-                    <b style="color:white; font-size:200%" font-size=>VAPAA / FREE TO USE</b>
-                </th>
+        </table>
+        <table border:1px #fff; border-radius:10px" width="40%" bgcolor="#fff" height="60px">
+            <thead>
+                <tr align="center" bgcolor=red style="border-radius:10px; border:1px red">
+                    <th style="border-radius:10px; border:1px red">
+                        <b style="color:white; font-size:200%" font-size=>KÄYTÖSSÄ / IN USE</b>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div id="Off" class="text-center" style="display: block">
+        <table style="float: left; border:0px" width="30%">
+            <tr style="border:0px">
+                <th style="border:0px"></th>
             </tr>
-        </thead>
-    </table>
-</div>
+        </table>
+        <table border:1px #fff; border-radius:10px" width="40%" bgcolor="#fff" height="60px">
+            <thead>
+                <tr align="center" bgcolor=#3deb34 style="border-radius:10px; border:1px #3deb34">
+                    <th style="border-radius:10px; border:1px #3deb34">
+                        <b style="color:white; font-size:200%" font-size=>VAPAA / FREE TO USE</b>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 <p>&nbsp;</p>
 
 
@@ -98,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (string varaus in SetupModel.Quu)
+                            @foreach (string varaus in SetupModel.Saturnus)
                             {
                                 SetupModel setup = new SetupModel();
                                 string[] pv = setup.Maanantai().Split('.');
@@ -112,7 +112,7 @@
                                 //0 = Vuosi
                                 //1 = Kuukausi
                                 //2 = Päivä
-                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                if(pvt[2].Substring(0, 2) == pv[0] && pvt[1] == pv[1] && pvt[0] == pv[2])
                                 {
                                     <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
                                         <td style="font-size:18px; border-radius:10px; border:1px white">
@@ -158,7 +158,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (string varaus in SetupModel.Quu)
+                            @foreach (string varaus in SetupModel.Saturnus)
                             {
                                 SetupModel setup = new SetupModel();
                                 string[] pv = setup.Tiistai().Split('.');
@@ -172,7 +172,7 @@
                                 //0 = Vuosi
                                 //1 = Kuukausi
                                 //2 = Päivä
-                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                if (pvt[2].Substring(0, 2) == pv[0] && pvt[1] == pv[1] && pvt[0] == pv[2])
                                 {
                                     <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
                                         <td style="font-size:18px; border-radius:10px; border:1px white">
@@ -219,7 +219,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (string varaus in SetupModel.Quu)
+                            @foreach (string varaus in SetupModel.Saturnus)
                             {
                                 SetupModel setup = new SetupModel();
                                 string[] pv = setup.Keskiviikko().Split('.');
@@ -233,7 +233,7 @@
                                 //0 = Vuosi
                                 //1 = Kuukausi
                                 //2 = Päivä
-                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                if (pvt[2].Substring(0, 2) == pv[0] && pvt[1] == pv[1] && pvt[0] == pv[2])
                                 {
                                     <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
                                         <td style="font-size:18px; border-radius:10px; border:1px white">
@@ -293,7 +293,7 @@
                                 //0 = Vuosi
                                 //1 = Kuukausi
                                 //2 = Päivä
-                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                if (pvt[2].Substring(0, 2) == pv[0] && pvt[1] == pv[1] && pvt[0] == pv[2])
                                 {
                                     <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
                                         <td style="font-size:18px; border-radius:10px; border:1px white">
@@ -339,7 +339,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (string varaus in SetupModel.Quu)
+                            @foreach (string varaus in SetupModel.Saturnus)
                             {
                                 SetupModel setup = new SetupModel();
                                 string[] pv = setup.Perjantai().Split('.');
@@ -353,7 +353,7 @@
                                 //0 = Vuosi
                                 //1 = Kuukausi
                                 //2 = Päivä
-                                if (@pvt[2].Substring(0, 2) == pv[0] && @pvt[1] == pv[1])
+                                if (pvt[2].Substring(0, 2) == pv[0] && pvt[1] == pv[1] && pvt[0] == pv[2])
                                 {
                                     <tr bgcolor=#fff style="border-radius:10px; border:1px white" align="center">
                                         <td style="font-size:18px; border-radius:10px; border:1px white">
@@ -410,6 +410,20 @@
         const keskiviikko = document.getElementById("ke");
         const torstai = document.getElementById("to");
         const perjantai = document.getElementById("pe");
+
+            const varattu = document.getElementById("On");
+            const vapaa = document.getElementById("Off");
+
+            var vastaus = "@SetupModel.OikeinSaturnus";
+            if (vastaus == 1) {
+                varattu.style.display = "block";
+                vapaa.style.display = "none";
+            }
+
+            if (vastaus == 0) {
+                varattu.style.display = "none";
+                vapaa.style.display = "block";
+            }
 
         if (tamapv == matext) {
             maanantai.style.backgroundColor = "#fff";

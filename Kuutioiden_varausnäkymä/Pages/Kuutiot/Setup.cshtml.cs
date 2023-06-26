@@ -17,13 +17,33 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         {
         }
         public static string AikaGet = "";
-        public static string OnOff()
+        public static string OnOff(string name)
         {
-            Onko();
+            if (name == "Jupiter")
+            {
+                JupiterPalautus();
+            }
+            if (name == "Merkurius")
+            {
+                MerkuriusPalautus();
+            }
+            if (name == "Neptunus")
+            {
+                NeptunusPalautus();
+            }
+            if (name == "Quu")
+            {
+                QuuPalautus();
+            }
+            if (name == "Saturnus")
+            {
+                SaturnusPalautus();
+            }
             return "";
         }
-        public static void Onko()
+        public static void NeptunusPalautus()
         {
+            OikeinNeptunus = 0;
             DateTime currentDateTime = DateTime.Now;
             int nytTun = Convert.ToInt32(currentDateTime.ToString("HH"));
             int nytMin = Convert.ToInt32(currentDateTime.ToString("mm"));
@@ -31,8 +51,10 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
             AikaGet = nyt.ToString();
             //formattedDateTime = currentDateTime.ToString("dd");
             int pvnyt = Convert.ToInt32(currentDateTime.ToString("dd"));
+            int kuunyt = Convert.ToInt32(currentDateTime.ToString("MM"));
+            int vuosinyt = Convert.ToInt32(currentDateTime.ToString("yyyy"));
 
-        foreach (string varaus in Neptunus)
+            foreach (string varaus in Neptunus)
         {
                 string word = varaus;
                 string[] tieto = word.Split(';');
@@ -46,26 +68,255 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
                 int varausminLop = Convert.ToInt32(aikaLoppu[1]);
                 int varausLoppu = (varaustunLop * 100) + varausminLop;
 
-                int varauspv = Convert.ToInt32(tieto[2].Substring(0, 2));
+                string[] varauspvtiedot = tieto[0].Split('-');
+                int varauspv = Convert.ToInt32(varauspvtiedot[2].Substring(0, 2));
+                int varauskuu = Convert.ToInt32(varauspvtiedot[1]);
+                int varausvuosi = Convert.ToInt32(varauspvtiedot[0]);
 
-                if (varauspv == pvnyt)
+                if (varauspv == pvnyt && varauskuu == kuunyt && varausvuosi == vuosinyt)
                 {
 
                 if (nyt <= varausLoppu)
                     {
                     if ((varausAlku - nyt) + varausLoppu <= varausLoppu)
                         {
-                        Oikein = 1;
+                        OikeinNeptunus = 1;
+                        break;
                     }
                 }
                 else
                 {
-                    Oikein = 0;
+                    OikeinNeptunus = 0;
+                }
+                }
+                else
+                {
+                    OikeinNeptunus = 0;
                 }
             }
         }
+        public static void JupiterPalautus()
+        {
+            OikeinJupiter = 0;
+            DateTime currentDateTime = DateTime.Now;
+            int nytTun = Convert.ToInt32(currentDateTime.ToString("HH"));
+            int nytMin = Convert.ToInt32(currentDateTime.ToString("mm"));
+            int nyt = (nytTun * 100) + nytMin;
+            AikaGet = nyt.ToString();
+            //formattedDateTime = currentDateTime.ToString("dd");
+            int pvnyt = Convert.ToInt32(currentDateTime.ToString("dd"));
+            int kuunyt = Convert.ToInt32(currentDateTime.ToString("MM"));
+            int vuosinyt = Convert.ToInt32(currentDateTime.ToString("yyyy"));
+
+            foreach (string varaus in Jupiter)
+            {
+                string word = varaus;
+                string[] tieto = word.Split(';');
+                string[] aikaAlku = tieto[0].Substring(10, 6).Split(':');
+                int varaustunAlk = Convert.ToInt32(aikaAlku[0]);
+                int varausminAlk = Convert.ToInt32(aikaAlku[1]);
+                int varausAlku = (varaustunAlk * 100) + varausminAlk;
+
+                string[] aikaLoppu = tieto[1].Substring(10, 6).Split(':');
+                int varaustunLop = Convert.ToInt32(aikaLoppu[0]);
+                int varausminLop = Convert.ToInt32(aikaLoppu[1]);
+                int varausLoppu = (varaustunLop * 100) + varausminLop;
+
+                string[] varauspvtiedot = tieto[0].Split('-');
+                int varauspv = Convert.ToInt32(varauspvtiedot[2].Substring(0, 2));
+                int varauskuu = Convert.ToInt32(varauspvtiedot[1]);
+                int varausvuosi = Convert.ToInt32(varauspvtiedot[0]);
+
+                if (varauspv == pvnyt && varauskuu == kuunyt && varausvuosi == vuosinyt)
+                {
+
+                    if (nyt <= varausLoppu)
+                    {
+                        if ((varausAlku - nyt) + varausLoppu <= varausLoppu)
+                        {
+                            OikeinJupiter = 1;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        OikeinJupiter = 0;
+                    }
+                }
+                else
+                {
+                    OikeinJupiter = 0;
+                }
+            }
         }
-        public static int Oikein = 0;
+        public static void MerkuriusPalautus()
+        {
+            OikeinMerkurius = 0;
+            DateTime currentDateTime = DateTime.Now;
+            int nytTun = Convert.ToInt32(currentDateTime.ToString("HH"));
+            int nytMin = Convert.ToInt32(currentDateTime.ToString("mm"));
+            int nyt = (nytTun * 100) + nytMin;
+            AikaGet = nyt.ToString();
+            //formattedDateTime = currentDateTime.ToString("dd");
+            int pvnyt = Convert.ToInt32(currentDateTime.ToString("dd"));
+            int kuunyt = Convert.ToInt32(currentDateTime.ToString("MM"));
+            int vuosinyt = Convert.ToInt32(currentDateTime.ToString("yyyy"));
+
+            foreach (string varaus in Merkurius)
+            {
+                string word = varaus;
+                string[] tieto = word.Split(';');
+                string[] aikaAlku = tieto[0].Substring(10, 6).Split(':');
+                int varaustunAlk = Convert.ToInt32(aikaAlku[0]);
+                int varausminAlk = Convert.ToInt32(aikaAlku[1]);
+                int varausAlku = (varaustunAlk * 100) + varausminAlk;
+
+                string[] aikaLoppu = tieto[1].Substring(10, 6).Split(':');
+                int varaustunLop = Convert.ToInt32(aikaLoppu[0]);
+                int varausminLop = Convert.ToInt32(aikaLoppu[1]);
+                int varausLoppu = (varaustunLop * 100) + varausminLop;
+
+                string[] varauspvtiedot = tieto[0].Split('-');
+                int varauspv = Convert.ToInt32(varauspvtiedot[2].Substring(0, 2));
+                int varauskuu = Convert.ToInt32(varauspvtiedot[1]);
+                int varausvuosi = Convert.ToInt32(varauspvtiedot[0]);
+
+                if (varauspv == pvnyt && varauskuu == kuunyt && varausvuosi == vuosinyt)
+                {
+
+                    if (nyt <= varausLoppu)
+                    {
+                        if ((varausAlku - nyt) + varausLoppu <= varausLoppu)
+                        {
+                            OikeinMerkurius = 1;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        OikeinMerkurius = 0;
+                    }
+                }
+                else
+                {
+                    OikeinMerkurius = 0;
+                }
+            }
+        }
+        public static void QuuPalautus()
+        {
+            OikeinQuu = 0;
+            DateTime currentDateTime = DateTime.Now;
+            int nytTun = Convert.ToInt32(currentDateTime.ToString("HH"));
+            int nytMin = Convert.ToInt32(currentDateTime.ToString("mm"));
+            int nyt = (nytTun * 100) + nytMin;
+            AikaGet = nyt.ToString();
+            //formattedDateTime = currentDateTime.ToString("dd");
+            int pvnyt = Convert.ToInt32(currentDateTime.ToString("dd"));
+            int kuunyt = Convert.ToInt32(currentDateTime.ToString("MM"));
+            int vuosinyt = Convert.ToInt32(currentDateTime.ToString("yyyy"));
+
+            foreach (string varaus in Quu)
+            {
+                string word = varaus;
+                string[] tieto = word.Split(';');
+                string[] aikaAlku = tieto[0].Substring(10, 6).Split(':');
+                int varaustunAlk = Convert.ToInt32(aikaAlku[0]);
+                int varausminAlk = Convert.ToInt32(aikaAlku[1]);
+                int varausAlku = (varaustunAlk * 100) + varausminAlk;
+
+                string[] aikaLoppu = tieto[1].Substring(10, 6).Split(':');
+                int varaustunLop = Convert.ToInt32(aikaLoppu[0]);
+                int varausminLop = Convert.ToInt32(aikaLoppu[1]);
+                int varausLoppu = (varaustunLop * 100) + varausminLop;
+
+                string[] varauspvtiedot = tieto[0].Split('-');
+                int varauspv = Convert.ToInt32(varauspvtiedot[2].Substring(0, 2));
+                int varauskuu = Convert.ToInt32(varauspvtiedot[1]);
+                int varausvuosi = Convert.ToInt32(varauspvtiedot[0]);
+
+                if (varauspv == pvnyt && varauskuu == kuunyt && varausvuosi == vuosinyt)
+                {
+
+                    if (nyt <= varausLoppu)
+                    {
+                        if ((varausAlku - nyt) + varausLoppu <= varausLoppu)
+                        {
+                            OikeinQuu = 1;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        OikeinQuu = 0;
+                    }
+                }
+                else
+                {
+                    OikeinQuu = 0;
+                }
+            }
+        }
+        public static void SaturnusPalautus()
+        {
+            OikeinSaturnus = 0;
+            DateTime currentDateTime = DateTime.Now;
+            int nytTun = Convert.ToInt32(currentDateTime.ToString("HH"));
+            int nytMin = Convert.ToInt32(currentDateTime.ToString("mm"));
+            int nyt = (nytTun * 100) + nytMin;
+            AikaGet = nyt.ToString();
+            //formattedDateTime = currentDateTime.ToString("dd");
+            int pvnyt = Convert.ToInt32(currentDateTime.ToString("dd"));
+            int kuunyt = Convert.ToInt32(currentDateTime.ToString("MM"));
+            int vuosinyt = Convert.ToInt32(currentDateTime.ToString("yyyy"));
+
+            foreach (string varaus in Saturnus)
+            {
+                string word = varaus;
+                string[] tieto = word.Split(';');
+                string[] aikaAlku = tieto[0].Substring(10, 6).Split(':');
+                int varaustunAlk = Convert.ToInt32(aikaAlku[0]);
+                int varausminAlk = Convert.ToInt32(aikaAlku[1]);
+                int varausAlku = (varaustunAlk * 100) + varausminAlk;
+
+                string[] aikaLoppu = tieto[1].Substring(10, 6).Split(':');
+                int varaustunLop = Convert.ToInt32(aikaLoppu[0]);
+                int varausminLop = Convert.ToInt32(aikaLoppu[1]);
+                int varausLoppu = (varaustunLop * 100) + varausminLop;
+
+                string[] varauspvtiedot = tieto[0].Split('-');
+                int varauspv = Convert.ToInt32(varauspvtiedot[2].Substring(0, 2));
+                int varauskuu = Convert.ToInt32(varauspvtiedot[1]);
+                int varausvuosi = Convert.ToInt32(varauspvtiedot[0]);
+
+
+                if (varauspv == pvnyt && varauskuu == kuunyt && varausvuosi == vuosinyt)
+                {
+
+                    if (nyt <= varausLoppu)
+                    {
+                        if ((varausAlku - nyt) + varausLoppu <= varausLoppu)
+                        {
+                            OikeinSaturnus = 1;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        OikeinSaturnus = 0;
+                    }
+                }
+                else
+                {
+                    OikeinSaturnus = 0;
+                }
+            }
+        }
+        public static int OikeinJupiter = 0;
+        public static int OikeinMerkurius = 0;
+        public static int OikeinNeptunus = 0;
+        public static int OikeinQuu = 0;
+        public static int OikeinSaturnus = 0;
         public int Viikko()
         {
             DateTime aika = DateTime.Now;
