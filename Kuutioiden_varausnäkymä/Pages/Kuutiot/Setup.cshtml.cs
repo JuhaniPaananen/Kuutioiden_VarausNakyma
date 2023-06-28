@@ -16,6 +16,8 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
         public void OnGet()
         {
         }
+        public static string InUse = "KÄYTÖSSÄ / IN USE";
+        public static string FreeUse = "VAPAA / FREE TO USE";
         public static string AikaGet = "";
         public static string OnOff(string name)
         {
@@ -347,6 +349,11 @@ namespace Kuutioiden_varausnäkymä.Pages.Kuutiot
             Saturnus.Clear();
             Quu.Clear();
             API();
+            Jupiter.Sort();
+            Merkurius.Sort();
+            Neptunus.Sort();
+            Quu.Sort();
+            Saturnus.Sort();
             return "";
         }
       
